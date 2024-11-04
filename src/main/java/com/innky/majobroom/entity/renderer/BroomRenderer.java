@@ -34,8 +34,8 @@ public class BroomRenderer extends EntityRenderer<MajoBroom> {
         float yaw = entityIn.getViewYRot(partialTicks);
         float pitch = entityIn.getViewXRot(partialTicks);
         matrixStackIn.pushPose();
-        matrixStackIn.mulPoseMatrix(new Matrix4f(Vector3f.XP.rotationDegrees(pitch)));
-        matrixStackIn.mulPoseMatrix(new Matrix4f(Vector3f.YP.rotationDegrees(90-yaw)));
+        matrixStackIn.mulPose(Axis.XP.rotationDegrees(pitch)));
+        matrixStackIn.mulPose(Axis.YP.rotationDegrees(90-yaw)));
         matrixStackIn.pushPose();
         float fl = entityIn.getRealFl(partialTicks);
         matrixStackIn.translate(0,0.1*fl,0);
