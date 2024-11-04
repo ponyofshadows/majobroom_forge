@@ -70,8 +70,8 @@ public class KeyBoardInput {
                 }
                 for (ItemStack item:playerEntity.getInventory().items) {
                     if (item.is(ItemRegistry.broomItem.get()) || playerEntity.isCreative()){
-                        playerEntity.level.playSound(playerEntity,playerEntity.blockPosition(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.NEUTRAL, 10F,1f);
-                        BroomItem.addParticle(playerEntity.level,playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), 30,2,1);
+                        playerEntity.level().playSound(playerEntity,playerEntity.blockPosition(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.NEUTRAL, 10F,1f);
+                        BroomItem.addParticle(playerEntity.level(),playerEntity.getX(), playerEntity.getY(), playerEntity.getZ(), 30,2,1);
                         break;
                     }
                 }
