@@ -43,7 +43,7 @@ public class ItemRegistry {
         boolean isRemote = true;
         try {
             System.out.println(HumanoidModel.class);
-        }catch (NoClassDefFoundError e){
+        }catch (RuntimeException e){
             isRemote = false;
         }
         try {
