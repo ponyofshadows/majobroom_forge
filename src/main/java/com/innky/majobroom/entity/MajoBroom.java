@@ -5,6 +5,7 @@ import net.minecraft.BlockUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -132,7 +133,7 @@ public class MajoBroom extends Boat {
         if (this.getDamage() > 0.0F) {
             this.setDamage(this.getDamage() - 1.0F);
         }
-        if (!this.level.isClientSide) {
+        if (!this.level().isClientSide) {
             this.setSharedFlag(6, this.isCurrentlyGlowing());
         }
         this.baseTick();
@@ -236,7 +237,7 @@ public class MajoBroom extends Boat {
         this.checkInsideBlocks();
         List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate((double)0.2F, (double)-0.01F, (double)0.2F), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
-            boolean flag = !this.level.isClientSide && !(this.getControllingPassenger() instanceof Player);
+            boolean flag = !this.level().isClientSide && !(this.getControllingPassenger() instanceof Player);
 
             for(int j = 0; j < list.size(); ++j) {
                 Entity entity = list.get(j);
@@ -252,14 +253,18 @@ public class MajoBroom extends Boat {
     }
 
     public boolean checkBlockCollision(AABB axisalignedbb) {
-        BlockPos blockpos = new BlockPos(axisalignedbb.minX + 0.001D, axisalignedbb.minY + 0.001D, axisalignedbb.minZ + 0.001D);
-        BlockPos blockpos1 = new BlockPos(axisalignedbb.maxX - 0.001D, axisalignedbb.maxY - 0.001D, axisalignedbb.maxZ - 0.001D);
-        BlockPos.MutableBlockPos blockpos$mutable = new BlockPos.MutableBlockPos();
-        for (int i = blockpos.getX(); i <= blockpos1.getX(); ++i) {
-            for (int j = blockpos.getY(); j <= blockpos1.getY(); ++j) {
-                for (int k = blockpos.getZ(); k <= blockpos1.getZ(); ++k) {
-                    blockpos$mutable.set(i, j, k);
-                    BlockState blockstate = this.level.getBlockState(blockpos$mutable);
+        int i = Mth.floor(aabb.minX);
+        int j = Mth.ceil(aabb.maxX);
+        int k = Mth.floor(aabb.minY);
+        int l = Mth.ceil(aabb.minY + 0.001);
+        int i1 = Mth.floor(aabb.minZ);
+        int j1 = Mth.ceil(aabb.maxZ);
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
+        for (int k1 = i; k1 < j; ++k1) {
+            for (int l1 = k; l1 < l; ++l1) {
+                for (int i2 = i1; i2 < j1; ++i2) {
+                    pos.set(i, j, k);
+                    BlockState blockstate = this.level().getBlockState(pos);
                     if (blockstate.canOcclude()){
                         return true;
                     }
@@ -279,18 +284,18 @@ public class MajoBroom extends Boat {
         if (passenger instanceof Player player && !Config.SHIFT_TO_DISMOUNT.get()){
             player.setShiftKeyDown(false);
         }
-        if (!level.isClientSide){
+        if (!level().isClientSide){
             entityData.set(configSpeed, Config.MAX_SPEED.get());
             entityData.set(configAdvancedMode,Config.ADVANCED_MODE.get());
         }
 //        System.out.println();
-        if(level.isClientSide){
+        if(level().isClientSide){
             updateControl();
 
         }
         summonParticle++;
         if(summonParticle == 3) {
-            addParticle(this.level, getX() - 0.5, getY() + 0.5, getZ() - 0.4, 1, 0, 1, ParticleTypes.CRIMSON_SPORE);
+            addParticle(this.level(), getX() - 0.5, getY() + 0.5, getZ() - 0.4, 1, 0, 1, ParticleTypes.CRIMSON_SPORE);
             summonParticle = 0;
         }
         superTick();
@@ -301,9 +306,9 @@ public class MajoBroom extends Boat {
             }
 
             this.floatBoat();
-            if (this.level.isClientSide) {
+            if (this.level().isClientSide) {
                 this.controlBoat();
-                this.level.sendPacketToServer(new ServerboundPaddleBoatPacket(this.getPaddleState(0), this.getPaddleState(1)));
+                this.level().sendPacketToServer(new ServerboundPaddleBoatPacket(this.getPaddleState(0), this.getPaddleState(1)));
             }
             Vec3 vector3d = new Vec3(-this.getDeltaMovement().z,this.getDeltaMovement().y,this.getDeltaMovement().x);
             double percent = entityData.get(configSpeed)/100.0;
@@ -425,12 +430,12 @@ public class MajoBroom extends Boat {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getEntity() instanceof Player player) {
-            if(level.isClientSide){
+            if(level().isClientSide){
                 if (Minecraft.getInstance().player != null) {
                     if(Minecraft.getInstance().options.keyShift.isDown() && player.getUUID() == Minecraft.getInstance().player.getUUID()) {
                         Networking.INSTANCE.sendToServer(new RidePack(this.getId(), false));
-                        this.level.playSound(player, player.blockPosition(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.NEUTRAL, 10F, 1f);
-                        addParticle(this.level, getX() - 0.5, getY() + 0.3, getZ() - 0.5, 30, 2, 1, ParticleTypes.SMOKE);
+                        this.level().playSound(player, player.blockPosition(), SoundEvents.ENDER_EYE_LAUNCH, SoundSource.NEUTRAL, 10F, 1f);
+                        addParticle(this.level(), getX() - 0.5, getY() + 0.3, getZ() - 0.5, 30, 2, 1, ParticleTypes.SMOKE);
                     }else {
     //                    Networking.INSTANCE.sendToServer(new ChangeBroomStatePack(this.getId(), true));
                     }
@@ -472,7 +477,7 @@ public class MajoBroom extends Boat {
     @Override
     public InteractionResult interact(Player player, InteractionHand hand) {
 
-        if(this.level.isClientSide){
+        if(this.level().isClientSide){
             if(Minecraft.getInstance().options.keyShift.isDown()){
             }else {
                 hasPassenger = true;
@@ -505,23 +510,17 @@ public class MajoBroom extends Boat {
         if(!getPassengers().isEmpty()){
 
             assert Minecraft.getInstance().player != null;
-            if (getPassengers().get(0).getUUID() == Minecraft.getInstance().player.getUUID()){
-                forward = Minecraft.getInstance().options.keyUp.isDown();
-                backward = Minecraft.getInstance().options.keyDown.isDown();
-                left = Minecraft.getInstance().options.keyLeft.isDown();
-                right = Minecraft.getInstance().options.keyRight.isDown();
-                up = KeyBoardInput.up;
-                down = KeyBoardInput.down;
-                if (KeyBoardInput.DOWN_KEY.getKey().getValue() == GLFW.GLFW_KEY_LEFT_CONTROL && Minecraft.getInstance().options.keySprint.getKey().getValue() == GLFW.GLFW_KEY_LEFT_CONTROL){
-                    down = Minecraft.getInstance().options.keySprint.isDown();
-                }
+            if (getPassengers().get(0).getUUID() == Minecraft.getInstance().player.getUUID()) {
+                final var options = Minecraft.getInstance().options;
+                up = options.keyJump.isDown();
+                down = options.keySprint.isDown();
 
             }else {
-                forward = backward = left = right = up = down =false;
+                up = down = false;
             }
         }else {
 
-            forward = backward = left = right = up = down =false;
+            up = down = false;
         }
     }
 
