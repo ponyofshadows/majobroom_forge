@@ -398,6 +398,7 @@ public class MajoBroom extends Boat {
     @Override
     public void positionRider(Entity passenger) {
 
+        super.positionRider(passenger);
         if(!getControlMode()) {
             passenger.yRotO += deltaRotation;
             passenger.yRot += deltaRotation;
