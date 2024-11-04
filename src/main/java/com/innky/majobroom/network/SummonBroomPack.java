@@ -44,7 +44,7 @@ public class SummonBroomPack {
         ctx.get().setPacketHandled(true);
     }
     private void summonBroom(Player playerEntity,ItemStack itemStack){
-        MajoBroom broomEntity = new MajoBroom(EntityTypeRegistry.majoBroom.get(), playerEntity.level);
+        MajoBroom broomEntity = new MajoBroom(EntityTypeRegistry.majoBroom.get(), playerEntity.level());
 //        broomEntity.setYHeadRot(playerEntity.getYHeadRot());
         broomEntity.setYRot(playerEntity.getYRot());
         broomEntity.setPos(playerEntity.getX(), playerEntity.getY(), playerEntity.getZ());
