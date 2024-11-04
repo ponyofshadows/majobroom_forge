@@ -5,8 +5,6 @@ import com.innky.majobroom.jsonbean.GeomtryBean;
 import com.innky.majobroom.utills.ModelJsonReader;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelPart;
@@ -14,6 +12,8 @@ import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
 
 import java.util.HashMap;
 import java.util.Map;
