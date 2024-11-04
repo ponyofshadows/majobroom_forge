@@ -396,14 +396,11 @@ public class MajoBroom extends Boat {
 
 
     @Override
-    public Vec3 getPassengerRidingPosition(Entity passenger) {
+    public void positionRider(@NotNull Entity passenger) {
 
         if(!getControlMode()) {
             passenger.yRotO += deltaRotation;
             passenger.yRot += deltaRotation;
-
-
-
 
         }else {
             float f = Mth.wrapDegrees(passenger.yRot - this.yRot);
@@ -413,10 +410,7 @@ public class MajoBroom extends Boat {
         }
         passenger.setYHeadRot(passenger.yRot);
         passenger.setYBodyRot(this.yRot);
-        return new Vec3(
-                this.getX(),
-                this.getY() + this.getMyRidingOffset(passenger) + passenger.getMyRidingOffset(passenger) + fl * 0.1 + 0.5,
-                this.getZ());
+        passenger.setPos(this.getX(), this.getY() + this.getMyRidingOffset() + passenger.getMyRidingOffset() +fl*0.1 + 0.5, this.getZ());
 
     }
 
