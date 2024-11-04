@@ -21,7 +21,7 @@ public enum ModArmorMaterial implements ArmorMaterial {
     private static final int[] MAX_DAMAGE_ARRAY = new int[]{13, 15, 16, 11};
     private final String name;
     private final int maxDamageFactor;
-    private final EnumMap<ArmorItem.Type, Integer> damageReductionAmountArray;
+    private final int[] damageReductionAmountArray;
     private final int enchantability;
     private final SoundEvent soundEvent;
     private final float toughness;
