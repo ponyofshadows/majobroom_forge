@@ -35,10 +35,10 @@ public enum ModArmorMaterial implements ArmorMaterial {
         p_266653_.put(ArmorItem.Type.HELMET, 11);
     });
 
-    ModArmorMaterial(String name, int maxDamageFactor, EnumMap<ArmorItem.Type, Integer> protectionFunctionForType, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
+    ModArmorMaterial(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
         this.name = name;
         this.maxDamageFactor = maxDamageFactor;
-        this.damageReductionAmountArray = protectionFunctionForType;
+        this.damageReductionAmountArray = damageReductionAmountArray;
         this.enchantability = enchantability;
         this.soundEvent = soundEvent;
         this.toughness = toughness;
@@ -52,8 +52,8 @@ public enum ModArmorMaterial implements ArmorMaterial {
     }
 
     @Override
-    public int getDefenseForType(ArmorItem.Type pType) {
-        return this.damageReductionAmountArray.get(pType);
+    public int getDefenseForType(ArmorItem.Type slotIn) {
+        return this.damageReductionAmountArray[slotIn.getIndex()];
     }
 
     public int getEnchantmentValue() {
