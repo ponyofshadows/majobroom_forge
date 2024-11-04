@@ -9,6 +9,8 @@ import com.innky.majobroom.armors.ModArmorMaterial;
 import com.innky.majobroom.armors.Modelinit;
 import com.innky.majobroom.item.BroomItem;
 import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraftforge.registries.RegistryObject;
@@ -29,7 +31,7 @@ public class ItemRegistry {
     public static  RegistryObject<Item> majoHat ;
     public static Map<String ,RegistryObject<Item>> itemMap = new HashMap<>();
 
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MajoBroom.MODID);
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "majobroom");
     public static RegistryObject<CreativeModeTab> MOD_TAB;
     
     public static void registry()  {
