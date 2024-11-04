@@ -19,7 +19,7 @@ public enum ModArmorMaterial implements ArmorMaterial {
         map.put(ArmorItem.Type.LEGGINGS, 4);
         map.put(ArmorItem.Type.CHESTPLATE, 5);
         map.put(ArmorItem.Type.HELMET, 2);
-    }), 20, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F, 0.0F, () -> {
+    }), 20, SoundEvents.ARMOR_EQUIP_DIAMOND, 5.0F, 0.0F, () -> {
         return Ingredient.of(ItemRegistry.broomItem.get());
     });
 
