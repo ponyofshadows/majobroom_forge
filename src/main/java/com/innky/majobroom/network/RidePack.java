@@ -34,7 +34,7 @@ public class RidePack {
             Player playerEntity = ctx.get().getSender();
             if (playerEntity != null){
 
-                MajoBroom broomEntity = (MajoBroom) playerEntity.level.getEntity(this.eid);
+                MajoBroom broomEntity = (MajoBroom) playerEntity.level().getEntity(this.eid);
                 if(broomEntity != null) {
                     if (ride) {
                         playerEntity.startRiding(broomEntity);
