@@ -30,11 +30,15 @@ public class ItemRegistry {
     public static  RegistryObject<Item> majoHat ;
     public static Map<String ,RegistryObject<Item>> itemMap = new HashMap<>();
 
-    public static void registry()  {
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, ModMajoBroom.MODID);
+    public static RegistryObject<CreativeModeTab, CreativeModeTab> MOD_TAB;
+    
+    public static void registry(IEventBus eventBus)  {
         ITEMS= DeferredRegister.create(ForgeRegistries.ITEMS, "majobroom");
         broomItem = ITEMS.register("broom_item", () ->{
-            return new BroomItem(new Item.Properties().tab(ModGroup.itemGroup));
+            return new BroomItem(new Item.Properties());
         });
+        itemMap.put("majobroom",broomItem);
         boolean isRemote = true;
         try {
             System.out.println(HumanoidModel.class);
@@ -50,16 +54,16 @@ public class ItemRegistry {
                     String[] results = temp.split(",");
                     switch (results[1]){
                         case "3":
-                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.HEAD, (new Item.Properties()).tab(ModGroup.itemGroup))));
+                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.HEAD, (new Item.Properties()))));
                             break;
                         case "2":
-                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.CHEST, (new Item.Properties()).tab(ModGroup.itemGroup))));
+                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.CHEST, (new Item.Properties()))));
                             break;
                         case "1":
-                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.LEGS, (new Item.Properties()).tab(ModGroup.itemGroup))));
+                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.LEGS, (new Item.Properties()))));
                             break;
                         case "0":
-                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.FEET, (new Item.Properties()).tab(ModGroup.itemGroup))));
+                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.FEET, (new Item.Properties()))));
                             break;
                     }
                     Modelinit.reg(results[0],isRemote);
@@ -70,6 +74,16 @@ public class ItemRegistry {
             e.printStackTrace();
         }
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+        MOD_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.majobroom")) //The language key for the title of your CreativeModeTab
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .icon(() -> ItemRegistry.broomItem.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+            for (DeferredItem<Item> holder : itemMap.values()) {
+                    output.accept(holder.get());
+                }
+            }).build());
+        ITEMS.register(eventBus);
     }
 }
 
