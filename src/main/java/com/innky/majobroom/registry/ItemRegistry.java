@@ -28,6 +28,9 @@ public class ItemRegistry {
     public static RegistryObject<Item> broomItem;
     public static  RegistryObject<Item> majoHat ;
     public static Map<String ,RegistryObject<Item>> itemMap = new HashMap<>();
+
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MajoBroom.MODID);
+    public static RegistryObject<CreativeModeTab> MOD_TAB;
     
     public static void registry()  {
         ITEMS= DeferredRegister.create(ForgeRegistries.ITEMS, "majobroom");
@@ -69,6 +72,16 @@ public class ItemRegistry {
         }catch (IOException e) {
             e.printStackTrace();
         }
+        MOD_TAB = CREATIVE_MODE_TABS.register("majo_group", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.majo_group")) //The language key for the title of your CreativeModeTab
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .icon(() -> ItemRegistry.broomItem.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                for (RegistryObject<Item> holder : itemMap.values()) {
+                    output.accept(holder.get());
+                }
+            }).build());
+        CREATIVE_MODE_TABS.register(FMLJavaModLoadingContext.get().getModEventBus());
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 }
