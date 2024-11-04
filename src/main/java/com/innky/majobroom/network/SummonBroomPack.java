@@ -49,7 +49,7 @@ public class SummonBroomPack {
         broomEntity.setYRot(playerEntity.getYRot());
         broomEntity.setPos(playerEntity.getX(), playerEntity.getY(), playerEntity.getZ());
         broomEntity.setControlMode(itemStack.getOrCreateTag().getBoolean("controlMode"));
-        playerEntity.level.addFreshEntity(broomEntity);
+        playerEntity.level().addFreshEntity(broomEntity);
         if (!playerEntity.isCreative()) {
             itemStack.shrink(1);
         }
