@@ -14,12 +14,7 @@ import java.util.EnumMap;
 import java.util.function.Supplier;
 
 public enum ModArmorMaterial implements ArmorMaterial {
-    CLOTH("cloth", 40, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-        map.put(ArmorItem.Type.BOOTS, 2);
-        map.put(ArmorItem.Type.LEGGINGS, 4);
-        map.put(ArmorItem.Type.CHESTPLATE, 5);
-        map.put(ArmorItem.Type.HELMET, 2);
-    }), 20, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F, 0.0F, () -> {
+    CLOTH("cloth", 40, new int[]{2, 4, 5, 2}, 20, SoundEvents.ARMOR_EQUIP_DIAMOND, 0.0F, 0.0F, () -> {
         return Ingredient.of(ItemRegistry.broomItem.get());
     });
 
@@ -40,7 +35,7 @@ public enum ModArmorMaterial implements ArmorMaterial {
         p_266653_.put(ArmorItem.Type.HELMET, 11);
     });
 
-    ModArmorMaterial(String name, int maxDamageFactor, int[] damageReductionAmountArray, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
+    ModArmorMaterial(String name, int maxDamageFactor, EnumMap<ArmorItem.Type, Integer> protectionFunctionForType, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
         this.name = name;
         this.maxDamageFactor = maxDamageFactor;
         this.damageReductionAmountArray = protectionFunctionForType;
