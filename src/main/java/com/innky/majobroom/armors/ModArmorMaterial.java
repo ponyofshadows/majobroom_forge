@@ -15,11 +15,11 @@ import java.util.function.Supplier;
 
 public enum ModArmorMaterial implements ArmorMaterial {
     CLOTH("cloth", 40, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-        map.put(ArmorItem.Type.BOOTS, 6);
-        map.put(ArmorItem.Type.LEGGINGS, 8);
+        map.put(ArmorItem.Type.BOOTS, 5);
+        map.put(ArmorItem.Type.LEGGINGS, 9);
         map.put(ArmorItem.Type.CHESTPLATE, 10);
         map.put(ArmorItem.Type.HELMET, 6);
-    }), 20, SoundEvents.ARMOR_EQUIP_DIAMOND, 3.0F, 0.0F, () -> {
+    }), 20, SoundEvents.ARMOR_EQUIP_DIAMOND, 4.0F, 0.0F, () -> {
         return Ingredient.of(ItemRegistry.broomItem.get());
     });
 
