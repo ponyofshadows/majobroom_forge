@@ -34,10 +34,10 @@ public enum ModArmorMaterial implements ArmorMaterial {
     private final Supplier<Ingredient> repairMaterial;
 
     private static final EnumMap<ArmorItem.Type, Integer> HEALTH_FUNCTION_FOR_TYPE = Util.make(new EnumMap<>(ArmorItem.Type.class), p_266653_ -> {
-        p_266653_.put(ArmorItem.Type.BOOTS, 13000);
-        p_266653_.put(ArmorItem.Type.LEGGINGS, 15000);
-        p_266653_.put(ArmorItem.Type.CHESTPLATE, 16000);
-        p_266653_.put(ArmorItem.Type.HELMET, 11000);
+        p_266653_.put(ArmorItem.Type.BOOTS, 1300);
+        p_266653_.put(ArmorItem.Type.LEGGINGS, 1500);
+        p_266653_.put(ArmorItem.Type.CHESTPLATE, 1600);
+        p_266653_.put(ArmorItem.Type.HELMET, 1100);
     });
 
     ModArmorMaterial(String name, int maxDamageFactor, EnumMap<ArmorItem.Type, Integer> protectionFunctionForType, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {
