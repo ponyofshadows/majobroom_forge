@@ -41,7 +41,7 @@ public class JsonBroomModel extends EntityModel<MajoBroom> {
     @Override
     public void renderToBuffer(PoseStack matrixStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
         matrixStack.pushPose();
-        matrixStack.mulPose(Axis.ZP.rotationDegrees(180)));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(180));
         matrixStack.translate(0,-1.5,0);
         base.render(matrixStack,buffer,packedLight,packedOverlay,red,green,blue,alpha);
         matrixStack.popPose();
