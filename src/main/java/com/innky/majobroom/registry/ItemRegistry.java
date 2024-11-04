@@ -8,7 +8,6 @@ import com.innky.majobroom.armors.MajoWearableItem;
 import com.innky.majobroom.armors.ModArmorMaterial;
 import com.innky.majobroom.armors.Modelinit;
 import com.innky.majobroom.item.BroomItem;
-import com.innky.majobroom.itemgroup.ModGroup;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
