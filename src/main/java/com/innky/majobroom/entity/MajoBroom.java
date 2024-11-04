@@ -235,7 +235,7 @@ public class MajoBroom extends Boat {
 
     public void collision(){
         this.checkInsideBlocks();
-        List<Entity> list = this.level.getEntities(this, this.getBoundingBox().inflate((double)0.2F, (double)-0.01F, (double)0.2F), EntitySelector.pushableBy(this));
+        List<Entity> list = this.level().getEntities(this, this.getBoundingBox().inflate((double)0.2F, (double)-0.01F, (double)0.2F), EntitySelector.pushableBy(this));
         if (!list.isEmpty()) {
             boolean flag = !this.level().isClientSide && !(this.getControllingPassenger() instanceof Player);
 
@@ -252,7 +252,7 @@ public class MajoBroom extends Boat {
         }
     }
 
-    public boolean checkBlockCollision(AABB axisalignedbb) {
+    public boolean checkBlockCollision(AABB aabb) {
         int i = Mth.floor(aabb.minX);
         int j = Mth.ceil(aabb.maxX);
         int k = Mth.floor(aabb.minY);
