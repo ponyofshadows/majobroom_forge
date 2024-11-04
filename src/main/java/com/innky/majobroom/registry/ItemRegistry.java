@@ -51,16 +51,16 @@ public class ItemRegistry {
                     String[] results = temp.split(",");
                     switch (results[1]){
                         case "3":
-                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.HEAD, (new Item.Properties()))));
+                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, ArmorItem.Type.HELMET, (new Item.Properties()))));
                             break;
                         case "2":
-                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.CHEST, (new Item.Properties()))));
+                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, ArmorItem.Type.CHESTPLATE, (new Item.Properties()))));
                             break;
                         case "1":
-                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.LEGS, (new Item.Properties()))));
+                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, ArmorItem.Type.LEGGINGS, (new Item.Properties()))));
                             break;
                         case "0":
-                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, EquipmentSlot.FEET, (new Item.Properties()))));
+                            itemMap.put(results[0],ITEMS.register(results[0], () -> new MajoWearableItem(ModArmorMaterial.CLOTH, ArmorItem.Type.BOOTS, (new Item.Properties()))));
                             break;
                     }
                     Modelinit.reg(results[0],isRemote);
