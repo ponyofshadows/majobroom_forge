@@ -397,7 +397,7 @@ public class MajoBroom extends Boat {
 
 
     @Override
-    public void positionRider(@NotNull Entity passenger) {
+    public Vec3 getPassengerRidingPosition(Entity passenger) {
 
         if(!getControlMode()) {
             passenger.yRotO += deltaRotation;
@@ -489,11 +489,6 @@ public class MajoBroom extends Boat {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.SUCCESS;
-    }
-
-    @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
-        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     public void setControls(boolean forward, boolean backward, boolean left, boolean right, boolean up,boolean down){
