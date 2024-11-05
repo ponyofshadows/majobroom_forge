@@ -120,7 +120,10 @@ public class MajoWearableModel extends HumanoidModel<LivingEntity> {
         }
         base.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);*/
         switch (model_name) {
-            case "majo_hat" -> this.base.copyFrom(this.head);
+            case "majo_hat" -> {
+                this.base.copyFrom(this.head);
+                dress.y = -0.1F;
+            }
             case "majo_cloth" -> {
                 this.base.getChild("bigBody").copyFrom(this.body);
                 this.base.getChild("epic").copyFrom(this.body);
