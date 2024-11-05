@@ -141,7 +141,7 @@ public class MajoWearableModel extends HumanoidModel<LivingEntity> {
                     this.base.getChild("bigBody").getChild("bone3").getChild("bone5").getChild("sithide2").visible = true;
                 }
             }
-            case "majo_boots" -> {
+            case "majo_stocking" -> {
                 this.base.getChild("LeftLeg").copyFrom(this.leftLeg);
                 this.base.getChild("RightLeg").copyFrom(this.rightLeg);
             }
