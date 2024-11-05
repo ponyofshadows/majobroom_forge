@@ -357,15 +357,13 @@ public class MajoBroom extends Boat {
 
 
 
-            hasMajoWearable = false;
+            numMajoWearable = 0;
             entity.getArmorSlots().forEach((a)->{
                 if (a.getItem() instanceof MajoWearableItem){
-                    hasMajoWearable = true;
+                    numMajoWearable += 1;
                 }
             });
-            if (!hasMajoWearable){
-                playerSpeed = Math.max(0,playerSpeed-0.06f);
-            }
+            playerSpeed = Math.max(0, playerSpeed + 0.06f * (numMajoWearable - 1));
 
         }else {
             playerSpeed = 0.9f;
