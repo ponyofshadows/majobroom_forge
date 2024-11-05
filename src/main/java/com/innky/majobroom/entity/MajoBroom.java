@@ -363,7 +363,7 @@ public class MajoBroom extends Boat {
                     numMajoWearable += 1;
                 }
             });
-            playerSpeed = Math.max(0, playerSpeed + 0.06f * (numMajoWearable - 1));
+            playerSpeed = Math.max(0, playerSpeed + 0.03f * (numMajoWearable - 1));
 
         }else {
             playerSpeed = 0.9f;
