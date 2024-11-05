@@ -51,16 +51,7 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
     @Nullable
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlot slot, String type) {
-        if (type!=null){
-            ResourceLocation resourceLocation = new ResourceLocation("majobroom","jsonmodels/textures/"+stack.getDescriptionId().substring(15)+"_overlay.png");
-            if(Minecraft.getInstance().getResourceManager().getResource(resourceLocation).isPresent()){
-                return "majobroom:jsonmodels/textures/"+stack.getDescriptionId().substring(15)+"_overlay.png";
-            }else {
-                return "majobroom:jsonmodels/textures/"+stack.getDescriptionId().substring(15)+".png";
-            }
-        }else {
-            return "majobroom:jsonmodels/textures/"+stack.getDescriptionId().substring(15)+".png";
-        }
+        return "majobroom:jsonmodels/textures/"+stack.getDescriptionId().substring(15)+".png";
 
     }
 
