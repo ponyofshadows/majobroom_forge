@@ -1,2 +1,3 @@
 majo_hat,3
 majo_cloth,2
+majo_stocking,0
