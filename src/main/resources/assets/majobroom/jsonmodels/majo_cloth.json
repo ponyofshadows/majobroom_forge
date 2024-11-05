@@ -8,6 +8,13 @@
 		"visible_bounds_offset": [0, 1.25, 0],
 		"bones": [
 			{
+				"name": "bb_main",
+				"pivot": [0, 0, 0],
+				"cubes": [
+					{"origin": [-5.6, 12.2, -11], "size": [18, 18, 18], "uv": [0, 0], "inflate": -8}
+				]
+			},
+			{
 				"name": "hide",
 				"pivot": [0, 0, 0]
 			},
