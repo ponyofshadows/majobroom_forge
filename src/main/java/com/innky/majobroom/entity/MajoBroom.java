@@ -377,7 +377,7 @@ public class MajoBroom extends Boat {
         fl = (float) Math.sin(2*serials);
 
     }
-    private boolean hasMajoWearable;
+    private char numMajoWearable;
     @Override
     public boolean canBeCollidedWith() {
         return true;
