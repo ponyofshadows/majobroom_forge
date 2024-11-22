@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 
 public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
     public MajoWearableItem(ArmorMaterial materialIn, ArmorItem.Type slot, Properties builderIn) {
-        super(materialIn, slot, builderIn);
+        super(materialIn, slot, builderIn.fireResistant().rarity(Rarity.EPIC));
     }
 
 
