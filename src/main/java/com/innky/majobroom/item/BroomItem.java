@@ -10,6 +10,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Rarity;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.Level;
 
 public class BroomItem extends Item {
     public BroomItem(Properties properties) {
-        super(properties);
+        super(properties.fireResistent().rarity(Rarity.EPIC));
     }
 
     @Override
