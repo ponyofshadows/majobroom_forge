@@ -3,12 +3,9 @@
   "pattern": [
     "m m",
     "m m",
-    "p p"
+    "m m"
   ],
   "key": {
-    "p": {
-      "item": "minecraft:purple_wool"
-    },
     "m": {
       "item": "minecraft:white_wool"
     }
