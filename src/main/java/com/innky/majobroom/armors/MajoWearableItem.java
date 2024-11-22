@@ -114,5 +114,5 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.LUCK, 240, 2, false, false));
             }
         }
-
+    }
 }
