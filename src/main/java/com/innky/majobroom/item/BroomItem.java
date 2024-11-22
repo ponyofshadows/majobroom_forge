@@ -22,7 +22,7 @@ import net.minecraft.world.level.Level;
 
 public class BroomItem extends Item {
     public BroomItem(Properties properties) {
-        super(properties.fireResistent().rarity(Rarity.EPIC));
+        super(properties.rarity(Rarity.EPIC));
     }
 
     @Override
