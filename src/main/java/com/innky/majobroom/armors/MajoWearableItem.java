@@ -65,8 +65,8 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 3, false, false));
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 240, 3, false, false));
             }
-		    if (stack.isDamaged()) {
-			    stack.setDamageValue(0);
+		    if (itemstack.isDamaged()) {
+			    itemstack.setDamageValue(0);
 		    }
         }
     }
@@ -85,8 +85,8 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.REGENERATION, 240, 3, false, false));
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 240, 0, false, false));
             }
-		    if (stack.isDamaged()) {
-			    stack.setDamageValue(0);
+		    if (itemstack.isDamaged()) {
+			    itemstack.setDamageValue(0);
 		    }
         }
     }
@@ -104,8 +104,8 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 240, 1, false, false));
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_BOOST, 240, 2, false, false));
             }
-            if (stack.isDamaged()) {
-			    stack.setDamageValue(0);
+            if (itemstack.isDamaged()) {
+			    itemstack.setDamageValue(0);
 		    }
         }
     }
@@ -123,8 +123,8 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SPEED, 240, 1, false, false));
                 livingEntity.addEffect(new MobEffectInstance(MobEffects.LUCK, 240, 2, false, false));
             }
-            if (stack.isDamaged()) {
-			    stack.setDamageValue(0);
+            if (itemstack.isDamaged()) {
+			    itemstack.setDamageValue(0);
 		    }
         }
     }
