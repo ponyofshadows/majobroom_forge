@@ -353,7 +353,7 @@ public class MajoBroom extends Boat {
             Entity entity = this.getPassengers().get(0);
 
 
-            playerSpeed = (float) (0.98-(0.7/((60/3)-9)));
+            playerSpeed = 0.9f;
 
 
 
@@ -363,7 +363,7 @@ public class MajoBroom extends Boat {
                     numMajoWearable += 1;
                 }
             });
-            playerSpeed = Math.max(0, playerSpeed + 0.03f * (numMajoWearable - 1));
+            playerSpeed = Math.max(0, playerSpeed + 0.02f * numMajoWearable);
 
         }else {
             playerSpeed = 0.9f;

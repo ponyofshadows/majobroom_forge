@@ -145,6 +145,10 @@ public class MajoWearableModel extends HumanoidModel<LivingEntity> {
                 this.base.getChild("LeftLeg").copyFrom(this.leftLeg);
                 this.base.getChild("RightLeg").copyFrom(this.rightLeg);
             }
+            case "majo_boots" -> {
+                this.base.getChild("LeftLeg").copyFrom(this.leftLeg);
+                this.base.getChild("RightLeg").copyFrom(this.rightLeg);
+            }
         }
 
         this.base.render(poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);

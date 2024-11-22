@@ -16,6 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
+import com.google.common.collect.Iterables;
 
 import javax.annotation.Nullable;
 
@@ -102,7 +103,7 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
 
     public static class Boots extends MajoWearableItem {
         public Boots() {
-            super(ArmorItem.Type.BOOTS, new Item.Properties());
+            super(ModArmorMaterial.CLOTH, ArmorItem.Type.BOOTS, new Item.Properties());
         }
 
 
