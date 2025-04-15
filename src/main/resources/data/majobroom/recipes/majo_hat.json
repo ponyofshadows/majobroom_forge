@@ -1,16 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " pg",
+    " lf",
     "pmp",
     "   "
   ],
   "key": {
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "f": {
+      "item": "minecraft:pufferfish"
+    },
     "p": {
       "item": "minecraft:purple_wool"
-    },
-    "g": {
-      "item": "minecraft:gold_ingot"
     },
     "m": {
       "item": "minecraft:pink_wool"

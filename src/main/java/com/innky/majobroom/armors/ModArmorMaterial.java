@@ -15,11 +15,11 @@ import java.util.function.Supplier;
 
 public enum ModArmorMaterial implements ArmorMaterial {
     CLOTH("cloth", 40, Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-        map.put(ArmorItem.Type.BOOTS, 5);
-        map.put(ArmorItem.Type.LEGGINGS, 9);
-        map.put(ArmorItem.Type.CHESTPLATE, 10);
-        map.put(ArmorItem.Type.HELMET, 6);
-    }), 20, SoundEvents.ARMOR_EQUIP_DIAMOND, 10.0F, 0.0F, () -> {
+        map.put(ArmorItem.Type.BOOTS, 3);
+        map.put(ArmorItem.Type.LEGGINGS, 2);
+        map.put(ArmorItem.Type.CHESTPLATE, 8);
+        map.put(ArmorItem.Type.HELMET, 8);
+    }), 25, SoundEvents.ARMOR_EQUIP_DIAMOND, 2.0F, 0.0F, () -> {
         return Ingredient.of(ItemRegistry.broomItem.get());
     });
 
@@ -34,10 +34,10 @@ public enum ModArmorMaterial implements ArmorMaterial {
     private final Supplier<Ingredient> repairMaterial;
 
     private static final EnumMap<ArmorItem.Type, Integer> HEALTH_FUNCTION_FOR_TYPE = Util.make(new EnumMap<>(ArmorItem.Type.class), p_266653_ -> {
-        p_266653_.put(ArmorItem.Type.BOOTS, 110);
-        p_266653_.put(ArmorItem.Type.LEGGINGS, 150);
-        p_266653_.put(ArmorItem.Type.CHESTPLATE, 160);
-        p_266653_.put(ArmorItem.Type.HELMET, 130);
+        p_266653_.put(ArmorItem.Type.BOOTS, 50);
+        p_266653_.put(ArmorItem.Type.LEGGINGS, 20);
+        p_266653_.put(ArmorItem.Type.CHESTPLATE, 60);
+        p_266653_.put(ArmorItem.Type.HELMET, 60);
     });
 
     ModArmorMaterial(String name, int maxDamageFactor, EnumMap<ArmorItem.Type, Integer> protectionFunctionForType, int enchantability, SoundEvent soundEvent, float toughness, float knockbackResistance, Supplier<Ingredient> repairMaterial) {

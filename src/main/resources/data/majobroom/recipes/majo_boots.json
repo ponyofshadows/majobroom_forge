@@ -1,13 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "   ",
-    "p p",
-    "p p"
+    "r r",
+    "l l",
+    "q q"
   ],
   "key": {
-    "p": {
-      "item": "minecraft:purple_wool"
+    "r": {
+      "item": "minecraft:redstone"
+    },
+    "l": {
+      "item": "minecraft:leather"
+    },
+    "q": {
+      "item": "minecraft:lapis_lazuli"
     }
   },
   "result": {

@@ -1,16 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " p ",
+    " c ",
     "pmp",
-    "pgp"
+    "p p"
   ],
   "key": {
+    "c": {
+      "item": "minecraft:magma_cream"
+    },
     "p": {
       "item": "minecraft:purple_wool"
-    },
-    "g": {
-      "item": "minecraft:gold_ingot"
     },
     "m": {
       "item": "minecraft:white_wool"
