@@ -97,7 +97,7 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
         public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
             super.inventoryTick(itemstack, world, entity, slot, selected);
             if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
-               livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 240, 0, false, false));
+               livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 240, 1, false, false));
             }
             if (itemstack.isDamaged()) {
 			    itemstack.setDamageValue(0);
