@@ -336,7 +336,14 @@ public class MajoBroom extends Boat {
                 this.setDeltaMovement(v2.z, v2.y, -v2.x);
 //                System.out.println(this.level.getBlockState(this.getPosition()).isSolid()+" "+this.getPosition());
             }else {
-
+              // no player input
+              Vec3 motion = this.getDeltaMovement();
+              double decay = 0.98;
+              motion = motion.scale(decay);
+              if (motion.lengthSqr() < 1e-4) {
+              motion = Vec3.ZERO;
+              }
+    this.setDeltaMovement(motion);
             }
 
 
