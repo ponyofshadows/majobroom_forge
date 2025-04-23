@@ -357,8 +357,13 @@ public class MajoBroom extends Boat {
 
 
         if (!this.getPassengers().isEmpty()){
-            // Collision box
-            this.setBoundingBox(new AABB(this.getX() - 0.3, this.getY(), this.getZ() - 0.3, this.getX() + 0.3, this.getY() + 2.0, this.getZ() + 0.3));
+            // default collision box
+            this.setBoundingBox(new AABB(this.getX() - 0.4, this.getY(), this.getZ() - 0.4, this.getX() + 0.4, this.getY() + 0.5, this.getZ() + 0.3));
+            // extra box on head
+            double offsetY = 2.0;
+            AABB extraBoundingBox = new AABB(this.getX() - 0.4, this.getY() + offsetY, this.getZ() - 0.4, this.getX() + 0.4, this.getY() + offsetY + 0.1, this.getZ() + 0.4);
+            // set extra box
+            this.setBoundingBox(extraBoundingBox);
             // speed
             Entity entity = this.getPassengers().get(0);
             playerSpeed = 0.9f;
