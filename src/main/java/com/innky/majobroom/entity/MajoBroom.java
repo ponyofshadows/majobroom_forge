@@ -263,7 +263,7 @@ public class MajoBroom extends Boat {
         for (int k1 = i; k1 < j; ++k1) {
             for (int l1 = k; l1 < l; ++l1) {
                 for (int i2 = i1; i2 < j1; ++i2) {
-                    pos.set(i, j, k);
+                    pos.set(k1, l1, i2);
                     BlockState blockstate = this.level().getBlockState(pos);
                     if (blockstate.canOcclude()){
                         return true;
@@ -336,7 +336,7 @@ public class MajoBroom extends Boat {
                 this.setDeltaMovement(v2.z, v2.y, -v2.x);
 //                System.out.println(this.level.getBlockState(this.getPosition()).isSolid()+" "+this.getPosition());
             }else {
-              // no player input
+              // wind resistance
               Vec3 motion = this.getDeltaMovement();
               double decay = 0.98;
               motion = motion.scale(decay);
@@ -357,13 +357,11 @@ public class MajoBroom extends Boat {
 
 
         if (!this.getPassengers().isEmpty()){
+            // Collision box
+            this.setBoundingBox(new AABB(this.getX() - 0.3, this.getY(), this.getZ() - 0.3, this.getX() + 0.3, this.getY() + 2.0, this.getZ() + 0.3));
+            // speed
             Entity entity = this.getPassengers().get(0);
-
-
             playerSpeed = 0.9f;
-
-
-
             numMajoWearable = 0;
             entity.getArmorSlots().forEach((a)->{
                 if (a.getItem() instanceof MajoWearableItem){
@@ -373,6 +371,9 @@ public class MajoBroom extends Boat {
             playerSpeed = Math.max(0, playerSpeed + 0.02f * numMajoWearable);
 
         }else {
+            // Collision box
+            this.setBoundingBox(new AABB(this.getX() - 0.5, this.getY(), this.getZ() - 0.5, this.getX() + 0.5, this.getY() + 0.5, this.getZ() + 0.5));
+            // speed
             playerSpeed = 0.9f;
         }
         serials += 0.05;
