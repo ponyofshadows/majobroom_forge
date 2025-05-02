@@ -2,18 +2,18 @@
   "type": "minecraft:crafting_shaped",
   "pattern": [
     "r r",
-    "l l",
-    "q q"
+    "b b",
+    "c c"
   ],
   "key": {
     "r": {
-      "item": "minecraft:redstone"
+      "item": "minecraft:poppy"
     },
-    "l": {
-      "item": "minecraft:leather"
+    "b": {
+      "item": "minecraft:cornflower"
     },
-    "q": {
-      "item": "minecraft:lapis_lazuli"
+    "c": {
+      "item": "irons_spellbooks:magic_cloth"
     }
   },
   "result": {

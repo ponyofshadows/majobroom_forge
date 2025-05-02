@@ -1,19 +1,19 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " c ",
-    "pmp",
-    "p p"
+    " m ",
+    "cfc",
+    "ccc"
   ],
   "key": {
-    "c": {
+    "m": {
       "item": "minecraft:magma_cream"
     },
-    "p": {
-      "item": "minecraft:purple_wool"
+    "c": {
+      "item": "irons_spellbooks:magic_cloth"
     },
-    "m": {
-      "item": "minecraft:white_wool"
+    "f": {
+      "item": "minecraft:sunflower"
     }
   },
   "result": {

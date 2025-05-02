@@ -57,13 +57,13 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
         }
 
 
-        @Override
-        public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-            super.inventoryTick(itemstack, world, entity, slot, selected);
-            if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 240, 3, false, false));
-            }
-        }
+        // @Override
+        // public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+        //     super.inventoryTick(itemstack, world, entity, slot, selected);
+        //     if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
+        //         livingEntity.addEffect(new MobEffectInstance(MobEffects.WATER_BREATHING, 240, 3, false, false));
+        //     }
+        // }
     }
 
     public static class Chestplate extends MajoWearableItem {
@@ -72,13 +72,13 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
         }
 
 
-        @Override
-        public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-            super.inventoryTick(itemstack, world, entity, slot, selected);
-            if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 240, 0, false, false));
-            }
-        }
+        // @Override
+        // public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+        //     super.inventoryTick(itemstack, world, entity, slot, selected);
+        //     if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
+        //         livingEntity.addEffect(new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 240, 0, false, false));
+        //     }
+        // }
     }
 
     public static class Leggings extends MajoWearableItem {
@@ -87,13 +87,13 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
         }
 
 
-        @Override
-        public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-            super.inventoryTick(itemstack, world, entity, slot, selected);
-            if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
-               livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 240, 1, false, false));
-            }
-        }
+        // @Override
+        // public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+        //     super.inventoryTick(itemstack, world, entity, slot, selected);
+        //     if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
+        //        livingEntity.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 240, 1, false, false));
+        //     }
+        // }
     }
 
     public static class Boots extends MajoWearableItem {
@@ -102,12 +102,12 @@ public class MajoWearableItem extends ArmorItem implements DyeableLeatherItem {
         }
 
 
-        @Override
-        public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
-            super.inventoryTick(itemstack, world, entity, slot, selected);
-            if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
-                livingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 240, 0, false, false));
-            }
-        }
+        // @Override
+        // public void inventoryTick(ItemStack itemstack, Level world, Entity entity, int slot, boolean selected) {
+        //     super.inventoryTick(itemstack, world, entity, slot, selected);
+        //     if (entity instanceof LivingEntity livingEntity && Iterables.contains(livingEntity.getArmorSlots(), itemstack)) {
+        //         livingEntity.addEffect(new MobEffectInstance(MobEffects.DIG_SPEED, 240, 0, false, false));
+        //     }
+        // }
     }
 }

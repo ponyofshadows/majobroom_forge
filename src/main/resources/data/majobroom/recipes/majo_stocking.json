@@ -1,15 +1,15 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "m m",
-    "m m",
-    "t t"
+    "c c",
+    "c c",
+    "f f"
   ],
   "key": {
-    "m": {
-      "item": "minecraft:white_wool"
+    "c": {
+      "item": "irons_spellbooks:magic_cloth"
     },
-    "t": {
+    "f": {
       "item": "minecraft:white_tulip"
     }
   },
