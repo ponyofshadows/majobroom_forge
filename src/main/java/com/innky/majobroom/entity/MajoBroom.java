@@ -50,8 +50,8 @@ import org.jetbrains.annotations.NotNull;
 import org.lwjgl.glfw.GLFW;
 import java.util.List;
 
-
-
+import net.minecraft.world.entity.boss.enderdragon.EnderDragon;
+import net.minecraft.network.chat.Component;
 
 
 
@@ -65,7 +65,9 @@ public class MajoBroom extends Boat {
 
 
 
-
+    //for ender_dragon
+    private int rideTickCounter = 0;
+    private boolean ender_dragon_force = false;
 
     private float fl = 0;
     private float serials = 0;
@@ -86,9 +88,6 @@ public class MajoBroom extends Boat {
     private static final EntityDataAccessor <Integer> playerLevel = SynchedEntityData.defineId(MajoBroom.class,EntityDataSerializers.INT);
     private static final EntityDataAccessor <Integer> configSpeed = SynchedEntityData.defineId(MajoBroom.class,EntityDataSerializers.INT);
     private static final EntityDataAccessor <Boolean> configAdvancedMode = SynchedEntityData.defineId(MajoBroom.class,EntityDataSerializers.BOOLEAN);
-
-
-
 
     @Override
     protected void defineSynchedData() {
@@ -120,6 +119,15 @@ public class MajoBroom extends Boat {
 
     public void setControlMode(boolean controlMode) {
         entityData.set(MajoBroom.controlMode, controlMode);
+    }
+
+    private boolean isEnderDragonLoaded() {
+        AABB searchBox = this.getBoundingBox().inflate(160);
+        return !this.level().getEntitiesOfClass(
+            EnderDragon.class,
+            searchBox,
+            Entity::isAlive
+        ).isEmpty();
     }
 
     private void superTick(){
@@ -281,9 +289,13 @@ public class MajoBroom extends Boat {
     @Override
     public void tick() {
         Entity passenger = this.getFirstPassenger();
-        if (passenger instanceof Player player && !Config.SHIFT_TO_DISMOUNT.get()){
+        boolean isAPlayer = passenger instanceof Player;
+        Player  player    = isAPlayer ? (Player) passenger : null;
+
+        if (isAPlayer && !Config.SHIFT_TO_DISMOUNT.get()){
             player.setShiftKeyDown(false);
         }
+        
         if (!level().isClientSide){
             entityData.set(configSpeed, Config.MAX_SPEED.get());
             entityData.set(configAdvancedMode,Config.ADVANCED_MODE.get());
@@ -389,6 +401,45 @@ public class MajoBroom extends Boat {
         lastfl = fl;
         fl = (float) Math.sin(2*serials);
 
+        // force of ender_dragon
+        if (isAPlayer) {
+          // in the center of the end?
+          boolean inEnd = player.level().dimension() == Level.END;
+          double px     = player.getX();
+          double pz     = player.getZ();
+          if (inEnd && px > -80.0 && px < 80.0 && pz > -80.0 && pz < 80.0) {
+            // in the center of the end-> power of ender dragon
+            // speical tick stuff:
+            if (rideTickCounter==0) {
+              if (isEnderDragonLoaded()) {
+                this.ender_dragon_force = true;
+                if (level().isClientSide) {
+                  player.displayClientMessage(
+                    Component.literal("Dragon's force interferes with your broom"),
+                    true
+                  );
+                }
+              } else {
+                this.ender_dragon_force = false;
+              }
+            }
+            // normal stuff:
+            if (ender_dragon_force) {
+              Vec3 motion = this.getDeltaMovement();
+              this.setDeltaMovement(motion.x, -0.4, motion.z);
+            }
+            this.rideTickCounter++;
+            if (this.rideTickCounter>=1200) this.rideTickCounter=0;
+          } else {
+            // is not in the center of the end
+            this.rideTickCounter    = 0;
+            this.ender_dragon_force = false;
+          }
+        } else {
+          // no player
+          this.rideTickCounter    = 0;
+          this.ender_dragon_force = false;
+        }
     }
     private char numMajoWearable;
     @Override
