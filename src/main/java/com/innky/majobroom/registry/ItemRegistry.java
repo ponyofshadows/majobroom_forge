@@ -25,6 +25,7 @@ public class ItemRegistry {
     public static  DeferredRegister<Item> ITEMS ;
     public static RegistryObject<Item> broomItem;
     public static  RegistryObject<Item> majoHat ;
+    public static RegistryObject<Item> eyeRing;
     public static Map<String ,RegistryObject<Item>> itemMap = new HashMap<>();
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, "majobroom");
@@ -36,6 +37,12 @@ public class ItemRegistry {
             return new BroomItem(new Item.Properties());
         });
         itemMap.put("majobroom",broomItem);
+        
+        eyeRing = ITEMS.register("eye_ring", () -> {
+          return new Item(new Item.Properties());
+    });
+        itemMap.put("eye_ring", eyeRing);
+
         boolean isRemote = true;
         try {
             System.out.println(HumanoidModel.class);
@@ -83,4 +90,3 @@ public class ItemRegistry {
         ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 }
-

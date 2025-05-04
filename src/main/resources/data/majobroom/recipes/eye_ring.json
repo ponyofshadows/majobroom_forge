@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " e ",
+    " b ",
+    " a "
+  ],
+  "key": {
+    "e": {
+      "item": "spore:vigil_eye"
+    },
+    "b": {
+      "item": "spore:brain_remnants"
+    },
+    "a": {
+      "item": "irons_spellbooks:arcane_salvage"
+    }
+  },
+  "result": {
+    "item": "majobroom:eye_ring",
+    "count": 1
+  }
+}
