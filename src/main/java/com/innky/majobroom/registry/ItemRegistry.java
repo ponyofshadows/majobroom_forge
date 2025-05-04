@@ -21,6 +21,8 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.innky.majobroom.item.EyeRingItem;
+
 public class ItemRegistry {
     public static  DeferredRegister<Item> ITEMS ;
     public static RegistryObject<Item> broomItem;
@@ -38,9 +40,9 @@ public class ItemRegistry {
         });
         itemMap.put("majobroom",broomItem);
         
-        eyeRing = ITEMS.register("eye_ring", () -> {
-          return new Item(new Item.Properties());
-    });
+        eyeRing = ITEMS.register("eye_ring", () ->
+          new EyeRingItem(new Item.Properties())
+);
         itemMap.put("eye_ring", eyeRing);
 
         boolean isRemote = true;
