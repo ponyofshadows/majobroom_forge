@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Random;
 
 public class EyeRingItem extends Item implements ICurioItem {
-    private static final String TAG_TIMER = "ring_timer";
+    public static final String TAG_TIMER = "ring_timer";
     private static final int TICKS_PER_MINUTE = 20 * 60;
     private static final Random RANDOM = new Random();
     private static final ResourceLocation RING_ID = new ResourceLocation("majobroom", "eye_ring");
