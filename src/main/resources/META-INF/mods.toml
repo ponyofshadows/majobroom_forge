@@ -20,7 +20,7 @@ modId="majobroom" #mandatory
 # see the associated build.gradle script for how to populate this completely automatically during a build
 version="${file.jarVersion}" #mandatory
  # A display name for the mod
-displayName="Majo Broom Mod" #mandatory
+displayName="Majobroom" #mandatory
 # A URL to query for updates for this mod. See the JSON update specification <here>
 # A URL for the "homepage" for this mod, displayed in the mod UI
 # A file name (in the root of the mod JAR) containing a logo for display
@@ -29,7 +29,7 @@ displayName="Majo Broom Mod" #mandatory
 authors="innky" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-以魔女之旅中伊蕾娜的扫帚为原型，参考借鉴了车万女仆模组中魔理沙的扫帚，所制作的魔女的扫帚模组
+以魔女之旅中伊蕾娜的扫帚为原型，参考借鉴了车万女仆模组中魔理沙的扫帚，所制作的魔女的扫帚模组。这个分支对irons_spellbooks和spore两个模组做了一定兼容。
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 [[dependencies.examplemod]] #optional
@@ -50,4 +50,18 @@ description='''
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
     versionRange="[1.20,1.20.2)"
     ordering="NONE"
+    side="BOTH"
+
+[[dependencies.majobroom]]
+    modId="irons_spellbooks"
+    mandatory=true
+    versionRange="[1.20.1-1.2.0,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.majobroom]]
+    modId="spore"
+    mandatory=true
+    versionRange="[2.1.0,)"
+    ordering="AFTER"
     side="BOTH"

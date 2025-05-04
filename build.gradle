@@ -67,16 +67,21 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
+    maven {
+        name = 'Illusive Soulworks maven'
+        url  = 'https://maven.theillusivec4.top/'
+    }
+    maven { url = 'https://maven.minecraftforge.net' }
+    maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
 }
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.20.1-47.1.0'
+    minecraft      'net.minecraftforge:forge:1.20.1-47.1.0'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-}
-mixin {
-    add sourceSets.main, "majobroom.refmap.json"
-    config 'majobroom.mixins.json'
-
+    //
+        // CURIOS *****************************************************************************************************
+    compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}:api")
+    runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_version}")
 }
 jar {
     manifest {
@@ -107,4 +112,10 @@ publishing {
             url "file://${project.projectDir}/mcmodsrepo"
         }
     }
+}
+
+
+mixin {
+    add sourceSets.main, 'majobroom.refmap.json'
+    config 'majobroom.mixins.json'
 }
