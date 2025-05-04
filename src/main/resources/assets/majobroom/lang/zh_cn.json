@@ -8,6 +8,8 @@
   "item.majobroom.majo_stocking": "魔女的丝袜",
   "item.majobroom.majo_boots": "魔女的靴子",
   "item.majobroom.eye_ring": "恐怖的眼眸戒指",
+  "item.majobroom.eye_ring.tooltip":"它的眼睛在引诱你和它建立建立连接...",
+  "item.majobroom.eye_ring.tooltip.2":"戴上一段时间后你就能从真菌类型的盔甲中汲取魔力，那么代价又是什么呢?",
   "key.down": "下降",
   "key.up": "上升",
   "key.summon": "召唤扫帚",
