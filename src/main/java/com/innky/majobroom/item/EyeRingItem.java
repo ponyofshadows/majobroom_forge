@@ -113,6 +113,7 @@ public class EyeRingItem extends Item implements ICurioItem {
             } else {
                 int currentAmp = currentBoost.getAmplifier();
                 int targetAmp = ringCount - 1;
+                if (targetAmp > 1) targetAmp = 1;
                 if (targetAmp > currentAmp) {
                     player.addEffect(new MobEffectInstance(
                         MobEffects.HEALTH_BOOST,
