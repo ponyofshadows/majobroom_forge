@@ -65,24 +65,6 @@ public class EyeRingItem extends Item implements ICurioItem {
             applyEffect(player, "spore", "marker", 5 * TICKS_PER_MINUTE, 0);
             applyEffect(player, "spore", "uneasy", 5 * TICKS_PER_MINUTE, 0);
 
-            MobEffectInstance currentBoost = player.getEffect(MobEffects.HEALTH_BOOST);
-            int newAmp = (currentBoost != null) ? currentBoost.getAmplifier() + 1 : 0;
-            if (newAmp > 1) newAmp = 1;
-            player.addEffect(new MobEffectInstance(
-                MobEffects.HEALTH_BOOST,
-                2 * TICKS_PER_MINUTE,
-                newAmp,
-                false,
-                false
-            ));
-            player.addEffect(new MobEffectInstance(
-                MobEffects.NIGHT_VISION,
-                2 * TICKS_PER_MINUTE,
-                0,
-                false,
-                false
-            ));
-
             if (RANDOM.nextInt(10) == 0) {
                 BlockPos belowPos = player.blockPosition().below();
                 Level world = player.level();
@@ -91,7 +73,6 @@ public class EyeRingItem extends Item implements ICurioItem {
                 }
             }
 
-            // if you take more than one eye_ring
             LazyOptional<IItemHandlerModifiable> curiosOpt =
                 CuriosApi.getCuriosHelper().getEquippedCurios(player);
             IItemHandlerModifiable handler = curiosOpt.orElse(null);
@@ -120,7 +101,37 @@ public class EyeRingItem extends Item implements ICurioItem {
                 }
             }
 
-            // mana boost
+            MobEffectInstance currentBoost = player.getEffect(MobEffects.HEALTH_BOOST);
+            if (currentBoost == null) {
+                player.addEffect(new MobEffectInstance(
+                    MobEffects.HEALTH_BOOST,
+                    Integer.MAX_VALUE,
+                    0,
+                    false,
+                    false
+                ));
+            } else {
+                int currentAmp = currentBoost.getAmplifier();
+                int targetAmp = ringCount - 1;
+                if (targetAmp > currentAmp) {
+                    player.addEffect(new MobEffectInstance(
+                        MobEffects.HEALTH_BOOST,
+                        Integer.MAX_VALUE,
+                        targetAmp,
+                        false,
+                        false
+                    ));
+                }
+            }
+
+            player.addEffect(new MobEffectInstance(
+                MobEffects.NIGHT_VISION,
+                2 * TICKS_PER_MINUTE,
+                0,
+                false,
+                false
+            ));
+
             Inventory inv = player.getInventory();
             int numSporeArmor = 0;
             for (ItemStack armor : inv.armor) {
@@ -129,15 +140,14 @@ public class EyeRingItem extends Item implements ICurioItem {
                     numSporeArmor++;
                 }
             }
-
             double prev = tag.getDouble(TAG_CURR_MANA);
             double curr = 50.0 * numSporeArmor;
             tag.putDouble(TAG_PREV_MANA, prev);
             tag.putDouble(TAG_CURR_MANA, curr);
-
             adjustPlayerMana(player, curr - prev);
         }
 
+        // update timer
         timer = (timer + 1) % TICKS_PER_MINUTE;
         tag.putInt(TAG_TIMER, timer);
     }
