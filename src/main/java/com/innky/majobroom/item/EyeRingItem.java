@@ -59,18 +59,9 @@ public class EyeRingItem extends Item implements ICurioItem {
         CompoundTag tag = stack.getOrCreateTag();
         int timer = tag.getInt(TAG_TIMER);
 
-        // 每分钟打印调试信息
-        if (player.level().getGameTime() % TICKS_PER_MINUTE == 0) {
-            player.sendSystemMessage(
-                Component.literal("[EyeRing DEBUG] ring_timer = " + timer),
-                false
-            );
-        }
-
         if (timer == 0) {
             ServerLevel serverWorld = (ServerLevel) player.level();
 
-            // 原有效果
             applyEffect(player, "spore", "marker", 5 * TICKS_PER_MINUTE, 0);
             applyEffect(player, "spore", "uneasy", 5 * TICKS_PER_MINUTE, 0);
 
@@ -100,7 +91,7 @@ public class EyeRingItem extends Item implements ICurioItem {
                 }
             }
 
-            // 多戒指疯狂效果
+            // if you take more than one eye_ring
             LazyOptional<IItemHandlerModifiable> curiosOpt =
                 CuriosApi.getCuriosHelper().getEquippedCurios(player);
             IItemHandlerModifiable handler = curiosOpt.orElse(null);
@@ -129,7 +120,7 @@ public class EyeRingItem extends Item implements ICurioItem {
                 }
             }
 
-            // 新增：每分钟计算 spore: 装备数量并调整 max_mana
+            // mana boost
             Inventory inv = player.getInventory();
             int numSporeArmor = 0;
             for (ItemStack armor : inv.armor) {
@@ -139,22 +130,18 @@ public class EyeRingItem extends Item implements ICurioItem {
                 }
             }
 
-            // 更新 NBT
             double prev = tag.getDouble(TAG_CURR_MANA);
             double curr = 50.0 * numSporeArmor;
             tag.putDouble(TAG_PREV_MANA, prev);
             tag.putDouble(TAG_CURR_MANA, curr);
 
-            // 调整玩家属性：irons_spellbooks:max_mana
             adjustPlayerMana(player, curr - prev);
         }
 
-        // 更新 timer 并保存
         timer = (timer + 1) % TICKS_PER_MINUTE;
         tag.putInt(TAG_TIMER, timer);
     }
 
-    /** 调整玩家的 max_mana 属性 **/
     public static void adjustPlayerMana(Player player, double amount) {
         ResourceLocation manaId = new ResourceLocation("irons_spellbooks", "max_mana");
         Attribute attr = ForgeRegistries.ATTRIBUTES.getValue(manaId);

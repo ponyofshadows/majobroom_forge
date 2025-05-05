@@ -26,10 +26,10 @@ public class RingEquipUnequipHandler {
             return;
         }
 
-        ItemStack from = event.getFrom();  // 之前的物品
-        ItemStack to   = event.getTo();    // 新的物品
+        ItemStack from = event.getFrom(); 
+        ItemStack to   = event.getTo(); 
 
-        // 装备 EyeRing 时：初始化 NBT 变量
+        // equip
         if (from.isEmpty() && to.getItem() instanceof EyeRingItem) {
             CompoundTag tag = to.getOrCreateTag();
             tag.putLong(EyeRingItem.TAG_PREV_MANA, 0L);
@@ -38,9 +38,8 @@ public class RingEquipUnequipHandler {
             return;
         }
 
-        // 脱下 EyeRing 时：处理效果和属性扣除
+        // unequip
         if (from.getItem() instanceof EyeRingItem && to.isEmpty()) {
-            // 1) 原有效果处理（Health Boost / Night Vision）
             MobEffectInstance hb = player.getEffect(MobEffects.HEALTH_BOOST);
             if (hb != null) {
                 int amp = hb.getAmplifier();
@@ -55,7 +54,6 @@ public class RingEquipUnequipHandler {
                     ));
                 }
             }
-            // 检查 Curios 槽中是否还存在其他 EyeRing
             LazyOptional<IItemHandlerModifiable> curiosOpt =
                 CuriosApi.getCuriosHelper().getEquippedCurios(player);
             IItemHandlerModifiable handler = curiosOpt.orElse(null);
@@ -73,15 +71,9 @@ public class RingEquipUnequipHandler {
                 player.removeEffect(MobEffects.NIGHT_VISION);
             }
 
-            // 2) 从戒指读取 current_mana 并调整玩家属性
             CompoundTag fromTag = from.getOrCreateTag();
             long curr = fromTag.getLong(EyeRingItem.TAG_CURR_MANA);
             EyeRingItem.adjustPlayerMana(player, -curr);
-
-            // 可选调试信息
-            String tagStr = fromTag.toString();
-            LOGGER.info("[EyeRing] Unequipped NBT: " + tagStr);
-            player.sendSystemMessage(Component.literal("DEBUG: unequipped NBT = " + tagStr));
         }
     }
 }
