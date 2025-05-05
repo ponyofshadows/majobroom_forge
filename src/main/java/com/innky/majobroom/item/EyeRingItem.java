@@ -7,12 +7,15 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -29,9 +32,11 @@ import java.util.Random;
 
 public class EyeRingItem extends Item implements ICurioItem {
     public static final String TAG_TIMER = "ring_timer";
+    public static final String TAG_PREV_MANA = "previous_mana";
+    public static final String TAG_CURR_MANA = "current_mana";
+
     private static final int TICKS_PER_MINUTE = 20 * 60;
     private static final Random RANDOM = new Random();
-    private static final ResourceLocation RING_ID = new ResourceLocation("majobroom", "eye_ring");
 
     public EyeRingItem(Properties props) {
         super(props.stacksTo(1));
@@ -39,15 +44,10 @@ public class EyeRingItem extends Item implements ICurioItem {
 
     @Override
     public void appendHoverText(ItemStack stack, Level world, List<Component> tooltip, TooltipFlag flag) {
-      // 父类的默认名称、稀有度等
-      super.appendHoverText(stack, world, tooltip, flag);
-
-      // 读取第一行 tooltip
-      tooltip.add(Component.translatable("item.majobroom.eye_ring.tooltip"));
-      // 如果你在 json 定义了第二行，再加一行
-      tooltip.add(Component.translatable("item.majobroom.eye_ring.tooltip.2"));
+        super.appendHoverText(stack, world, tooltip, flag);
+        tooltip.add(Component.translatable("item.majobroom.eye_ring.tooltip"));
+        tooltip.add(Component.translatable("item.majobroom.eye_ring.tooltip.2"));
     }
-
 
     @Override
     public void curioTick(SlotContext slotContext, ItemStack stack) {
@@ -59,7 +59,8 @@ public class EyeRingItem extends Item implements ICurioItem {
         CompoundTag tag = stack.getOrCreateTag();
         int timer = tag.getInt(TAG_TIMER);
 
-        if (player.level().getGameTime() % 60 == 0) {
+        // 每分钟打印调试信息
+        if (player.level().getGameTime() % TICKS_PER_MINUTE == 0) {
             player.sendSystemMessage(
                 Component.literal("[EyeRing DEBUG] ring_timer = " + timer),
                 false
@@ -83,16 +84,13 @@ public class EyeRingItem extends Item implements ICurioItem {
                 false,
                 false
             ));
-
-          // 每次 timer 重置时，给予玩家 2 分钟的夜视
             player.addEffect(new MobEffectInstance(
-              MobEffects.NIGHT_VISION,
-              2 * TICKS_PER_MINUTE,
-              0,
-              false,
-              false
+                MobEffects.NIGHT_VISION,
+                2 * TICKS_PER_MINUTE,
+                0,
+                false,
+                false
             ));
-
 
             if (RANDOM.nextInt(10) == 0) {
                 BlockPos belowPos = player.blockPosition().below();
@@ -102,10 +100,10 @@ public class EyeRingItem extends Item implements ICurioItem {
                 }
             }
 
-            // 新增：多戒指疯狂效果
+            // 多戒指疯狂效果
             LazyOptional<IItemHandlerModifiable> curiosOpt =
                 CuriosApi.getCuriosHelper().getEquippedCurios(player);
-            IItemHandlerModifiable handler = curiosOpt.orElse(null);  // orElse(null) 当未提供时返回 null :contentReference[oaicite:0]{index=0}
+            IItemHandlerModifiable handler = curiosOpt.orElse(null);
             int ringCount = 0;
             if (handler != null) {
                 for (int i = 0; i < handler.getSlots(); i++) {
@@ -115,10 +113,9 @@ public class EyeRingItem extends Item implements ICurioItem {
                     }
                 }
             }
-
             if (ringCount > 1 && RANDOM.nextInt(6) == 0) {
                 ResourceLocation madnessId = new ResourceLocation("spore", "madness");
-                MobEffect madnessEffect = ForgeRegistries.MOB_EFFECTS.getValue(madnessId);
+                var madnessEffect = ForgeRegistries.MOB_EFFECTS.getValue(madnessId);
                 if (madnessEffect != null) {
                     MobEffectInstance existing = player.getEffect(madnessEffect);
                     int amp = (existing != null) ? existing.getAmplifier() + 1 : 0;
@@ -131,18 +128,47 @@ public class EyeRingItem extends Item implements ICurioItem {
                     ));
                 }
             }
+
+            // 新增：每分钟计算 spore: 装备数量并调整 max_mana
+            Inventory inv = player.getInventory();
+            int numSporeArmor = 0;
+            for (ItemStack armor : inv.armor) {
+                ResourceLocation id = ForgeRegistries.ITEMS.getKey(armor.getItem());
+                if (id != null && "spore".equals(id.getNamespace())) {
+                    numSporeArmor++;
+                }
+            }
+
+            // 更新 NBT
+            double prev = tag.getDouble(TAG_CURR_MANA);
+            double curr = 50.0 * numSporeArmor;
+            tag.putDouble(TAG_PREV_MANA, prev);
+            tag.putDouble(TAG_CURR_MANA, curr);
+
+            // 调整玩家属性：irons_spellbooks:max_mana
+            adjustPlayerMana(player, curr - prev);
         }
 
-        timer++;
-        if (timer >= TICKS_PER_MINUTE) {
-            timer = 0;
-        }
+        // 更新 timer 并保存
+        timer = (timer + 1) % TICKS_PER_MINUTE;
         tag.putInt(TAG_TIMER, timer);
+    }
+
+    /** 调整玩家的 max_mana 属性 **/
+    public static void adjustPlayerMana(Player player, double amount) {
+        ResourceLocation manaId = new ResourceLocation("irons_spellbooks", "max_mana");
+        Attribute attr = ForgeRegistries.ATTRIBUTES.getValue(manaId);
+        if (attr != null) {
+            AttributeInstance inst = player.getAttribute(attr);
+            if (inst != null) {
+                inst.setBaseValue(inst.getBaseValue() + amount);
+            }
+        }
     }
 
     private void applyEffect(ServerPlayer player, String modid, String effectName, int duration, int amplifier) {
         ResourceLocation id = new ResourceLocation(modid, effectName);
-        MobEffect effect = ForgeRegistries.MOB_EFFECTS.getValue(id);
+        var effect = ForgeRegistries.MOB_EFFECTS.getValue(id);
         if (effect != null) {
             player.addEffect(new MobEffectInstance(effect, duration, amplifier, false, false));
         }

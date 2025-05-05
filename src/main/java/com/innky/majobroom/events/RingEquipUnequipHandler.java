@@ -6,7 +6,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,22 +17,30 @@ import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.event.CurioChangeEvent;
 
 @Mod.EventBusSubscriber(modid = "majobroom")
-public class RingUnequipHandler {
+public class RingEquipUnequipHandler {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @SubscribeEvent
     public static void onCurioChange(CurioChangeEvent event) {
-        // 只处理玩家实体
         if (!(event.getEntity() instanceof Player player)) {
             return;
         }
 
-        ItemStack from = event.getFrom();  // 被摘下的戒指
-        ItemStack to   = event.getTo();    // 放入的新物品
+        ItemStack from = event.getFrom();  // 之前的物品
+        ItemStack to   = event.getTo();    // 新的物品
 
-        // 仅当 from 是 EyeRing，且 to 为空（摘下操作）时继续
+        // 装备 EyeRing 时：初始化 NBT 变量
+        if (from.isEmpty() && to.getItem() instanceof EyeRingItem) {
+            CompoundTag tag = to.getOrCreateTag();
+            tag.putLong(EyeRingItem.TAG_PREV_MANA, 0L);
+            tag.putLong(EyeRingItem.TAG_CURR_MANA, 0L);
+            LOGGER.info("[EyeRing] Equipped: initialized mana tags");
+            return;
+        }
+
+        // 脱下 EyeRing 时：处理效果和属性扣除
         if (from.getItem() instanceof EyeRingItem && to.isEmpty()) {
-            // —— 保留原有的效果处理（Health Boost / Night Vision） —— 
+            // 1) 原有效果处理（Health Boost / Night Vision）
             MobEffectInstance hb = player.getEffect(MobEffects.HEALTH_BOOST);
             if (hb != null) {
                 int amp = hb.getAmplifier();
@@ -66,12 +73,15 @@ public class RingUnequipHandler {
                 player.removeEffect(MobEffects.NIGHT_VISION);
             }
 
-            // —— 仅保留这一条调试：把被摘下戒指的 NBT 发给玩家及日志 —— 
-            CompoundTag fromTag = from.getTag();
-            String fromStr = fromTag != null ? fromTag.toString() : "{}";
-            LOGGER.info("[EyeRing] Unequip from-slot NBT: " + fromStr);
-            // 发送到玩家聊天栏
-            player.sendSystemMessage(Component.literal("DEBUG: unequipped NBT = " + fromStr));
+            // 2) 从戒指读取 current_mana 并调整玩家属性
+            CompoundTag fromTag = from.getOrCreateTag();
+            long curr = fromTag.getLong(EyeRingItem.TAG_CURR_MANA);
+            EyeRingItem.adjustPlayerMana(player, -curr);
+
+            // 可选调试信息
+            String tagStr = fromTag.toString();
+            LOGGER.info("[EyeRing] Unequipped NBT: " + tagStr);
+            player.sendSystemMessage(Component.literal("DEBUG: unequipped NBT = " + tagStr));
         }
     }
 }
