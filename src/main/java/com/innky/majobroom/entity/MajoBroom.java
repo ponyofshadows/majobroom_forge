@@ -408,7 +408,7 @@ public class MajoBroom extends Boat {
           double px     = player.getX();
           double pz     = player.getZ();
           double py     = player.getY();
-          if (inEnd && px > -80.0 && px < 80.0 && pz > -80.0 && pz < 80.0 && py > 16.0) {
+          if (inEnd && px > -100.0 && px < 100.0 && pz > -100.0 && pz < 100.0 && py > 60.0) {
             // in the center of the end-> power of ender dragon
             // speical tick stuff:
             if (rideTickCounter==0) {
