@@ -16,9 +16,9 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
 
-version = '1.2'
+version = '1.0'
 group = 'com.yourname.majobroom' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'majobroom'
+archivesBaseName = 'majobroom_for_irons_spellbooks_and_spore'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
