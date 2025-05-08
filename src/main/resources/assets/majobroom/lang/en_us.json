@@ -15,6 +15,7 @@
   "key.up": "Up",
   "key.summon": "Summon Broom",
   "message.majobroom.levelnotenough": "Experience Level Not Enough!",
+  "message.majobroom.dragon_force": "Dragon’s force interferes with your broom",
   "message.majobroom.showlevel": "Current Level :%d",
   "advancements.majobroom.root.title": "Magical World",
   "advancements.majobroom.root.description": "Make a broom"
