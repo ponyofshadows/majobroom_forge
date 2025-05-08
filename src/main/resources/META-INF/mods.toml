@@ -14,7 +14,7 @@ license="All rights reserved"
 # A list of mods - how many allowed here is determined by the individual mod loader
 [[mods]] #mandatory
 # The modid of the mod
-modId="majobroom" #mandatory
+modId="majobroom_for_spellbooks_and_spore" #mandatory
 # The version number of the mod - there's a few well known ${} variables useable here or just hardcode it
 # ${file.jarVersion} will substitute the value of the Implementation-Version as read from the mod's JAR file metadata
 # see the associated build.gradle script for how to populate this completely automatically during a build
@@ -26,7 +26,7 @@ displayName="Majobroom" #mandatory
 # A file name (in the root of the mod JAR) containing a logo for display
 # A text field displayed in the mod UI
 # A text field displayed in the mod UI
-authors="innky" #optional
+authors="innky, ponyofshadows" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
 以魔女之旅中伊蕾娜的扫帚为原型，参考借鉴了车万女仆模组中魔理沙的扫帚，所制作的魔女的扫帚模组。这个分支对irons_spellbooks和spore两个模组做了一定兼容。
