@@ -416,7 +416,7 @@ public class MajoBroom extends Boat {
                 this.ender_dragon_force = true;
                 if (level().isClientSide) {
                   player.displayClientMessage(
-                    Component.literal("Dragon's force interferes with your broom"),
+                    Component.translatable("message.majobroom.dragon_force"),
                     true
                   );
                 }
